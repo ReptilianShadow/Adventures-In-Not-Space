@@ -7,10 +7,12 @@
 
 #include "TextureManager.h"
 
-
+TextureManager* TextureManager::TMInst = 0;
 
 bool TextureManager::load(std::string fileName, std::string id, SDL_Renderer* pRenderer)
 {
+
+	std::cout << id << " loaded" << std::endl;
 	SDL_Surface* pTempSurface = IMG_Load(fileName.c_str());
 
 	if(pTempSurface == 0)
@@ -66,6 +68,9 @@ void TextureManager::drawFrame(std::string id, int x, int y, int width, int heig
 			&destRect, 0, 0, flip);
 }
 
+SDL_Texture* TextureManager::getTexture(std::string id){
+	return m_textureMap[id];
+}
 
 
 

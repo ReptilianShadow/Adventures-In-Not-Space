@@ -6,16 +6,19 @@
 CPP_SRCS += \
 ../src/Adventures.cpp \
 ../src/Game.cpp \
+../src/MainShip.cpp \
 ../src/TextureManager.cpp 
 
 OBJS += \
 ./src/Adventures.o \
 ./src/Game.o \
+./src/MainShip.o \
 ./src/TextureManager.o 
 
 CPP_DEPS += \
 ./src/Adventures.d \
 ./src/Game.d \
+./src/MainShip.d \
 ./src/TextureManager.d 
 
 

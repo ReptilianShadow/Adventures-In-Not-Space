@@ -20,16 +20,14 @@
 
 using namespace std;
 
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
-
-
+const int INIT_SCREEN_WIDTH = 640;
+const int INIT_SCREEN_HEIGHT = 480;
 
 Game* g_game = new Game();
 
 int main(int argc, char **argv) {
 
-	g_game->init("Adventures in (Not) Space", 50, 50, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+	g_game->init("Adventures in (Not) Space", 50, 50, INIT_SCREEN_WIDTH, INIT_SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 
 	while (!g_game->quitRequested()){
 

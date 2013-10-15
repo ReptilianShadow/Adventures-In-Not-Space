@@ -13,6 +13,8 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
+#include "TextureManager.h"
+
 class Game {
 public:
 	Game();
@@ -32,10 +34,14 @@ public:
 
 private:
 
-	bool gameQuit = false;
+	//SDL initialization
+	bool initSDLStuff(const char * windowTitle, int xPos, int yPos, int width, int height, int sdlWindowflags);
+
+	bool gameQuit;
 	bool m_bRunning;
-	SDL_Window *window = 0;
-	SDL_Renderer *renderer = 0;
+	SDL_Window *window;
+	SDL_Renderer *renderer;
+	int screenWidth, screenHeight;
 
 };
 
