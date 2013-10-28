@@ -20,6 +20,6 @@ void MainShip::render(){
 
 	int shipWidth = 0, shipHeight = 0;
 		//SDL_QueryTexture(texManager.getTexture("ship"), 0, 0, &shipWidth, &shipHeight);
-		//texManager.draw("ship", 0, 0, shipWidth, shipHeight, renderer);
+		TextureManager::getInstance()->draw("ship", 0, 0, shipWidth, shipHeight, renderer, SDL_FLIP_NONE);
 
 }

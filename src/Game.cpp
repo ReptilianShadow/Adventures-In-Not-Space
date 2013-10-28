@@ -36,7 +36,7 @@ bool Game::init(const char * windowTitle, int xPos, int yPos, int width, int hei
 
 	cout << "Game Initialization Successful" << endl;
 
-	TextureManager::Instance()->load("assets/ship.png", "ship", renderer);
+	TextureManager::getInstance()->load("assets/ship.png", "ship", renderer);
 
 	//.load("assets/ship.png", "ship", renderer);
 
@@ -72,7 +72,7 @@ void Game::render(){
 	SDL_RenderClear(renderer);
 
 
-
+	TextureManager::getInstance()->draw("ship", 0,0,50,50,renderer,SDL_FLIP_NONE);
 
 
 	SDL_RenderPresent(renderer);

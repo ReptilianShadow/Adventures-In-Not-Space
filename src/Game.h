@@ -32,6 +32,9 @@ public:
 	bool running() { return m_bRunning; }
 	bool quitRequested() {return gameQuit;}
 
+	static SDL_Window *window;
+	static SDL_Renderer *renderer;
+
 private:
 
 	//SDL initialization
@@ -39,8 +42,7 @@ private:
 
 	bool gameQuit;
 	bool m_bRunning;
-	SDL_Window *window;
-	SDL_Renderer *renderer;
+
 	int screenWidth, screenHeight;
 
 };

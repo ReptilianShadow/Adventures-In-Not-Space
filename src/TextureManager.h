@@ -17,26 +17,27 @@
 class TextureManager{
 
 public:
-	bool load(std::string fileName,std::string id, SDL_Renderer* pRenderer);
+
+
+
+	bool TextureManager::load(std::string fileName, std::string id);
 
 	void draw(std::string id, int x, int y, int width, int height,
-			SDL_Renderer* pRenderer, SDL_RendererFlip flip = SDL_FLIP_NONE);
+			SDL_RendererFlip flip = SDL_FLIP_NONE);
 
 	void drawFrame(std::string id, int x, int y, int width, int height, int currentRow, int currentFrame,
-			SDL_Renderer* pRenderer, SDL_RendererFlip flip = SDL_FLIP_NONE);
+			SDL_RendererFlip flip = SDL_FLIP_NONE);
 
 	SDL_Texture* getTexture(std::string id);
 
-	static TextureManager* Instance(){ //if an instance does not exist, create one, and return it
-		if (TMInst == 0){
-			TMInst = new TextureManager();
-		}
-		return TMInst;
-	}
+	static TextureManager* getInstance(); //if an instance does not exist, create one, and return it
 
 private:
+	//class instance for singleton
+	static TextureManager* instance;
+
 	//private constructor because its a singleton
-	TextureManager();
+	TextureManager(){};
 
 
 	std::map<std::string, SDL_Texture*>m_textureMap;
