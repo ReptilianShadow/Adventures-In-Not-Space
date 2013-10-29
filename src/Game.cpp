@@ -7,14 +7,15 @@
 
 #include "Game.h"
 
+#include <math.h>
 
 using namespace std;
 
 Game::Game() {
-	renderer = NULL;
-	gameQuit = false;
-	window = NULL;
-	m_bRunning = true;
+	Game::renderer = NULL;
+	gameRunning = true;
+	Game::window = NULL;
+
 	screenWidth = 0;
 	screenHeight = 0;
 }
@@ -36,10 +37,21 @@ bool Game::init(const char * windowTitle, int xPos, int yPos, int width, int hei
 
 	cout << "Game Initialization Successful" << endl;
 
-	TextureManager::getInstance()->load("assets/ship.png", "ship", renderer);
+	//create keymap, it updates states without further calls
+	//only SDL_PumpEvents(); is required, but that's included with
+	//SDLPollEvent
+	keymap = SDL_GetKeyboardState(0);
 
-	//.load("assets/ship.png", "ship", renderer);
+	//load all necessary texture here?
+	//I'm not sure  if you should load all textures at startup
+	//or if I should dynamically load them.. the latter would make sense
+	//to preserve memory usage but idk...
+	TextureManager::getInstance()->load("assets/ship.png", "ship");
 
+
+
+	shipX = screenWidth / 2;
+	shipY = screenHeight / 2;
 
 
 
@@ -47,16 +59,49 @@ bool Game::init(const char * windowTitle, int xPos, int yPos, int width, int hei
 }
 
 void Game::checkInput(){
-	SDL_Event e;
-	while (SDL_PollEvent(&e)){
 
-		if (e.type == SDL_KEYDOWN){
+	//Do per event actions
 
-		}else if (e.type == SDL_KEYUP){
+	SDL_Event event;
+	while (SDL_PollEvent(&event)){
+
+		if (event.type == SDL_KEYDOWN){
+
+			SDL_Keycode keyPressed = event.key.keysym.sym;
+
+			switch(keyPressed){
+			case SDLK_ESCAPE:
+				gameRunning = false;
+				break;
+
+			}
+		}else if (event.type == SDL_KEYUP){
 
 		}
-		if (e.type == SDL_QUIT) gameQuit = true;
+		if (event.type == SDL_QUIT) gameRunning = false;
 	}
+
+
+	//check key states for actions to be done
+
+
+	if (getKeyState(SDLK_LEFT)){
+		shipX -=7;
+	}
+	if (getKeyState(SDLK_RIGHT)){
+		shipX +=7;
+	}
+	if (getKeyState(SDLK_UP)){
+		shipY -=7;
+	}
+	if (getKeyState(SDLK_DOWN)){
+		shipY +=7;
+	}
+
+}
+
+bool Game::getKeyState(SDL_Keycode keyToCheckPress){
+	return keymap[ (Uint8) keyToCheckPress];
 }
 
 void Game::update(){
@@ -65,24 +110,23 @@ void Game::update(){
 
 
 
-
 }
 
 void Game::render(){
-	SDL_RenderClear(renderer);
+	SDL_RenderClear(Game::renderer);
 
 
-	TextureManager::getInstance()->draw("ship", 0,0,50,50,renderer,SDL_FLIP_NONE);
+	TextureManager::getInstance()->draw("ship", shipX, shipY,50,50,SDL_FLIP_NONE);
 
 
-	SDL_RenderPresent(renderer);
+	SDL_RenderPresent(Game::renderer);
 
 }
 
 void Game::cleanup(){
 	//maybe not necessary
-	SDL_DestroyRenderer(renderer);
-	SDL_DestroyWindow(window);
+	SDL_DestroyRenderer(Game::renderer);
+	SDL_DestroyWindow(Game::window);
 
 
 	IMG_Quit();
@@ -104,18 +148,18 @@ bool Game::initSDLStuff(const char * windowTitle, int xPos, int yPos, int width,
 	cout << "SDL_image init Successful" << endl;
 
 
-	window = SDL_CreateWindow(windowTitle, xPos, yPos, width, height, sdlWindowflags);
-	if (window == NULL){
+	Game::window = SDL_CreateWindow(windowTitle, xPos, yPos, width, height, sdlWindowflags);
+	if (Game::window == NULL){
 		cerr << "Error Creating: CreateWindow" << endl;
 		return false;
 	}
-	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-	if (renderer == NULL){
+	Game::renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+	if (Game::renderer == NULL){
 		cerr << "Error Creating: CreateRenderer" << endl;
 		return false;
 	}
 
-	SDL_SetRenderDrawColor(renderer, 50, 0, 50, 255);
+	SDL_SetRenderDrawColor(Game::renderer, 50, 0, 50, 255);
 
 	return true;
 }

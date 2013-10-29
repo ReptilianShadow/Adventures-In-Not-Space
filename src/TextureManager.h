@@ -14,13 +14,15 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
+#include "Game.h"
+
 class TextureManager{
 
 public:
 
 
 
-	bool TextureManager::load(std::string fileName, std::string id);
+	bool load(std::string fileName, std::string id);
 
 	void draw(std::string id, int x, int y, int width, int height,
 			SDL_RendererFlip flip = SDL_FLIP_NONE);

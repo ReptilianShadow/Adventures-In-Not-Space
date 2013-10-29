@@ -11,6 +11,8 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
+#include "TextureManager.h"
+
 class MainShip {
 public:
 	MainShip();

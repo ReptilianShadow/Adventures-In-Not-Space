@@ -14,6 +14,7 @@
 #include <SDL2/SDL_image.h>
 
 #include "TextureManager.h"
+#include "MainShip.h"
 
 class Game {
 public:
@@ -29,21 +30,30 @@ public:
 	void cleanup();
 
 	// a function to access the private running variable
-	bool running() { return m_bRunning; }
-	bool quitRequested() {return gameQuit;}
+	bool running() { return gameRunning; }
+	bool quitRequested() {return !gameRunning;}
 
-	static SDL_Window *window;
-	static SDL_Renderer *renderer;
+	static SDL_Window* window;
+	static SDL_Renderer* renderer;
 
 private:
 
 	//SDL initialization
 	bool initSDLStuff(const char * windowTitle, int xPos, int yPos, int width, int height, int sdlWindowflags);
 
-	bool gameQuit;
-	bool m_bRunning;
+	//return true if key is down, false if up
+	//use values SDLK_*
+	bool getKeyState(SDL_Keycode);
+
+	bool gameRunning;
 
 	int screenWidth, screenHeight;
+
+	const Uint8 * keymap;
+
+	int shipX, shipY;
+
+
 
 };
 

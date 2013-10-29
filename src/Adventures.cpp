@@ -25,6 +25,9 @@ const int INIT_SCREEN_HEIGHT = 480;
 
 Game* g_game = new Game();
 
+SDL_Window *Game::window = NULL;
+SDL_Renderer *Game::renderer = NULL;
+
 int main(int argc, char **argv) {
 
 	g_game->init("Adventures in (Not) Space", 50, 50, INIT_SCREEN_WIDTH, INIT_SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
@@ -38,6 +41,8 @@ int main(int argc, char **argv) {
 
 	g_game->cleanup();
 
+
+	cout << "Main() end." << endl;
 	return 0;
 
 }
